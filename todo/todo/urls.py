@@ -16,13 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
-from todo import views
+from rest_framework import routers
+from todo.views import api_root
+from users.views import UserList, UserDetail
+from todoapi.views import TodoList, TodoDetail
+
+router = routers.DefaultRouter()
+router.register('users', UserList)
+router.register('users', UserDetail)
+router.register('todoapi', TodoList)
+router.register('todoapi', TodoDetail)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='Todo API', description='RESTful API for Todo')),
-    path('$', views.api_root),
-    path('', include('users.urls', namespace='users')),
-    path('', include('todoapi.urls', namespace='todoapi')),
+    path('', api_root),
+    path('users/', include('users.urls', namespace='users')),
+    path('todoapi/', include('todoapi.urls', namespace='todoapi')),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
