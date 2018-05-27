@@ -1,2 +1,12 @@
 #virtual environment
 /.venv
+
+/.vscode
+
+todo/todo/__pycache__
+
+todo/todoapi/__pycache__
+
+todo/users/__pycache__
+
+todo/db.sqlite3
